@@ -29,7 +29,7 @@ public class SpalshActivity extends AppCompatActivity {
 
             try {
                 sleep(3000);
-                Intent i=new Intent(getApplicationContext(),MainTabsActivity.class);
+                Intent i=new Intent(getApplicationContext(),SignInActivity.class);
                 startActivity(i);
             } catch (InterruptedException e) {
                 e.printStackTrace();
