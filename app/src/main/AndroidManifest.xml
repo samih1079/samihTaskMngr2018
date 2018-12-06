@@ -20,7 +20,7 @@
             android:name=".MainTabsActivity"
             android:label="@string/title_activity_main_tabs"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".taskfragments.SignUpActivity" />
+        <activity android:name=".SignUpActivity" />
         <activity android:name=".SignInActivity" />
         <activity android:name=".AddTaskActivity"></activity>
     </application>

@@ -11,6 +11,7 @@ public class MyTask
     private int necessary;
     private Date createdAt;
     private Date dueDate;
+    private String owner;
 
     public MyTask()
     {
@@ -83,5 +84,9 @@ public class MyTask
                 ", createdAt=" + createdAt +
                 ", dueDate=" + dueDate +
                 '}';
+    }
+
+    public void setOwner(String owner) {
+        this.owner = owner;
     }
 }

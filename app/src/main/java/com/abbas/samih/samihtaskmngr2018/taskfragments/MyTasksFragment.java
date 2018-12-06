@@ -11,9 +11,16 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.abbas.samih.samihtaskmngr2018.R;
+import com.abbas.samih.samihtaskmngr2018.data.MyTask;
 import com.abbas.samih.samihtaskmngr2018.taskfragments.dummy.DummyContent;
 import com.abbas.samih.samihtaskmngr2018.taskfragments.dummy.DummyContent.DummyItem;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -56,11 +63,36 @@ public class MyTasksFragment extends Fragment {
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            recyclerView.setAdapter(new MyItemRecyclerViewAdapter(DummyContent.ITEMS, mListener));
+            recyclerView.setAdapter(new MyItemRecyclerViewAdapter(readTasks(), mListener));
         }
         return view;
     }
 
+    private List<MyTask> readTasks()
+    {
+        final ArrayList<MyTask> myTasks=new ArrayList<>();
+        //reference to the database root
+        DatabaseReference reference= FirebaseDatabase.getInstance().getReference();
+
+        reference.child("MyTasks").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot)
+            {
+                for (DataSnapshot d : dataSnapshot.getChildren())
+                {
+                    MyTask task=d.getValue(MyTask.class);
+                    myTasks.add(task);
+
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+        return myTasks;
+    }
 
     @Override
     public void onAttach(Context context) {
@@ -91,6 +123,6 @@ public class MyTasksFragment extends Fragment {
      */
     public interface OnListFragmentInteractionListener {
         // TODO: Update argument type and name
-        void onListFragmentInteraction(DummyItem item);
+        void onListFragmentInteraction(MyTask item);
     }
 }

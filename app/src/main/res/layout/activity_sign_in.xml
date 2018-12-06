@@ -24,7 +24,7 @@
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:inputType="textPersonName"
-                android:text="E-mail" />
+                android:hint="E-mail" />
 
             <EditText
                 android:id="@+id/edPassWord"
@@ -32,7 +32,7 @@
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:inputType="textPersonName"
-                android:text="PassWord" />
+                android:hint="PassWord" />
 
             <Button
                 android:id="@+id/btnLogIn"
