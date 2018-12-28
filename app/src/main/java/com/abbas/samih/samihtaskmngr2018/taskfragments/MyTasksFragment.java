@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.abbas.samih.samihtaskmngr2018.R;
 import com.abbas.samih.samihtaskmngr2018.data.MyTask;
@@ -35,7 +36,7 @@ public class MyTasksFragment extends Fragment {
     private int mColumnCount = 1;
 
     private OnListFragmentInteractionListener mListener;
-
+    MyItemRecyclerViewAdapter adapter;
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
@@ -53,7 +54,8 @@ public class MyTasksFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.taskfragment_item_list, container, false);
-
+        if(adapter==null)
+         adapter = new MyItemRecyclerViewAdapter(readTasks(), mListener);
         // Set the adapter
         if (view instanceof RecyclerView) {
             Context context = view.getContext();
@@ -63,7 +65,7 @@ public class MyTasksFragment extends Fragment {
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            recyclerView.setAdapter(new MyItemRecyclerViewAdapter(readTasks(), mListener));
+            recyclerView.setAdapter(adapter);
         }
         return view;
     }
@@ -78,12 +80,16 @@ public class MyTasksFragment extends Fragment {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot)
             {
+                Toast.makeText(getContext(), "data changed", Toast.LENGTH_SHORT).show();
+                myTasks.clear();
                 for (DataSnapshot d : dataSnapshot.getChildren())
                 {
                     MyTask task=d.getValue(MyTask.class);
                     myTasks.add(task);
 
+
                 }
+                adapter.notifyDataSetChanged();
             }
 
             @Override
